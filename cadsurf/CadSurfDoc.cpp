@@ -5,6 +5,7 @@
 #include "CadSurf.h"
 
 #include "CadSurfDoc.h"
+#include "Points.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -926,32 +927,60 @@ void CCadSurfDoc::OnTorus()
 	delete gP; delete gS; delete gP1; delete gS1; delete gAx;
 }
 
-void CCadSurfDoc::OnBSplineSurface() 
+void CCadSurfDoc::OnBSplineSurface()
 {
 	// TODO: Add your command handler code here
-	dContext->DeleteAll();
+	Points point;
+	if (point.DoModal() == IDOK)
+	{
+		dContext->DeleteAll();
 
-	::CWaitCursor aCur;
+		::CWaitCursor aCur;
 
-	CBSplineSurface S;
-	CGLSurface* gS = new CGLSurface(&S);
-	dContext->Display(gS);
+		std::array<std::array<CPoint3D, 4>, 4> cpMat;
+		for (int i = 0; i < 4; i++)
+		{
+			for (int j = 0; j < 4; j++)
+			{
+				cpMat[i][j] = CPoint3D(point.cpMat[i][j][0],
+									point.cpMat[i][j][1],
+									point.cpMat[i][j][2]);
+			}
+		}
+		CBSplineSurface S(cpMat);
+		CGLSurface* gS = new CGLSurface(&S);
+		dContext->Display(gS);
 
-	delete gS;
+		delete gS;
+	}
 }
 
-void CCadSurfDoc::OnBezierSurface() 
+void CCadSurfDoc::OnBezierSurface()
 {
 	// TODO: Add your command handler code here
-	dContext->DeleteAll();
+	Points point;
+	if (point.DoModal() == IDOK)
+	{
+		dContext->DeleteAll();
 
-	::CWaitCursor aCur;
+		::CWaitCursor aCur;
 
-	CBezierSurface S;
-	CGLSurface* gS = new CGLSurface(&S);
-	dContext->Display(gS);
+		std::array<std::array<CPoint3D, 4>, 4> cpMat;
+		for (int i = 0; i < 4; i++)
+		{
+			for (int j = 0; j < 4; j++)
+			{
+				cpMat[i][j] = CPoint3D(point.cpMat[i][j][0],
+									point.cpMat[i][j][1],
+									point.cpMat[i][j][2]);
+			}
+		}
+		CBezierSurface S(cpMat);
+		CGLSurface* gS = new CGLSurface(&S);
+		dContext->Display(gS);
 
-	delete gS;
+		delete gS;
+	}
 }
 
 void CCadSurfDoc::OnExtsurf() 

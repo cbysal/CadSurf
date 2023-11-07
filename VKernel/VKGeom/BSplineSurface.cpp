@@ -5,26 +5,6 @@
 #include "MMath.h"
 #include "GeomException.h"
 
-CBSplineSurface::CBSplineSurface()
-{
-    cpMat[0][0] = CPoint3D(20, 0, 200);
-    cpMat[0][1] = CPoint3D(0, 100, 150);
-    cpMat[0][2] = CPoint3D(-130, 100, 50);
-    cpMat[0][3] = CPoint3D(-250, 50, 0);
-    cpMat[1][0] = CPoint3D(100, 100, 150);
-    cpMat[1][1] = CPoint3D(30, 100, 100);
-    cpMat[1][2] = CPoint3D(-40, 100, 50);
-    cpMat[1][3] = CPoint3D(-110, 50, 0);
-    cpMat[2][0] = CPoint3D(280, 90, 140);
-    cpMat[2][1] = CPoint3D(110, 120, 80);
-    cpMat[2][2] = CPoint3D(0, 130, 30);
-    cpMat[2][3] = CPoint3D(-100, 150, -50);
-    cpMat[3][0] = CPoint3D(350, 30, 150);
-    cpMat[3][1] = CPoint3D(200, 150, 50);
-    cpMat[3][2] = CPoint3D(50, 200, 0);
-    cpMat[3][3] = CPoint3D(0, 100, -70);
-}
-
 CBSplineSurface::CBSplineSurface(const std::array<std::array<CPoint3D, 4>, 4> &newCpMatrix) : cpMat(newCpMatrix)
 {
 }

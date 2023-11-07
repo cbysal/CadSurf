@@ -11,7 +11,6 @@
 class VKGEOM_API CBSplineSurface : public CBasicSurface
 {
 public:
-	CBSplineSurface();
 	CBSplineSurface(const std::array<std::array<CPoint3D, 4>, 4> &);
 	inline void SetCpMatrix(const std::array<std::array<CPoint3D, 4>, 4> &newCpMatrix) { cpMat = newCpMatrix; }
 	inline std::array<std::array<CPoint3D, 4>, 4> GetCpMatrix() const { return cpMat; }
