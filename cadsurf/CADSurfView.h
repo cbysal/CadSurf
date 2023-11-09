@@ -172,6 +172,7 @@ protected:
 	afx_msg void OnFilePrintPreview();
 	afx_msg void OnProjectionType();
 	afx_msg void OnUpdateProjectionType(CCmdUI* pCmdUI);
+	afx_msg void OnLButtonDblClk(UINT nFlags, CPoint point);
 	//}}AFX_MSG
 public:
 	afx_msg void OnTopview();

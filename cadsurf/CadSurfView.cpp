@@ -29,6 +29,7 @@ BEGIN_MESSAGE_MAP(CCadSurfView, CView)
 	//{{AFX_MSG_MAP(CCadSurfView)
 	ON_WM_LBUTTONDOWN()
 	ON_WM_LBUTTONUP()
+	ON_WM_LBUTTONDBLCLK()
 	ON_WM_MBUTTONDOWN()
 	ON_WM_MBUTTONUP()
 	ON_WM_RBUTTONDOWN()
@@ -313,6 +314,36 @@ void CCadSurfView::OnLButtonDown(UINT nFlags, CPoint point)
 		InvalidateRect(NULL, FALSE);
 	}
 	CView::OnLButtonDown(nFlags, point);
+}
+
+void CCadSurfView::OnLButtonDblClk(UINT nFlags, CPoint point)
+{
+	if (m_pCmd)
+	{
+		CPoint3D pt3d;
+		m_pCmd->OnLButtonDblClk(nFlags, pt3d);
+		return;
+	}
+	CCadSurfDoc *pDoc = GetDocument();
+	CGLDisplayContext* ctx = pDoc->dContext;
+	for(ctx->InitSelected(); ctx->MoreSelected(); ctx->NextSelected())
+	{
+		CGLObject* O = ctx->CurrentSelected();
+		CBSplineSurface* bsplineSurface = dynamic_cast<CBSplineSurface *>(O->Geometry());
+		if (bsplineSurface != nullptr)
+		{
+			if (pDoc->OnBSplineSurfaceEx(bsplineSurface))
+				ctx->EraseSelected();
+			return;
+		}
+		CBezierSurface* bezierSurface = dynamic_cast<CBezierSurface *>(O->Geometry());
+		if (bezierSurface != nullptr)
+		{
+			if (pDoc->OnBezierSurfaceEx(bezierSurface))
+				ctx->EraseSelected();
+			return;
+		}
+	}
 }
 
 void CCadSurfView::OnLButtonUp(UINT nFlags, CPoint point) 

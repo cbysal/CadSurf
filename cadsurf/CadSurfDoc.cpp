@@ -927,10 +927,22 @@ void CCadSurfDoc::OnTorus()
 	delete gP; delete gS; delete gP1; delete gS1; delete gAx;
 }
 
-void CCadSurfDoc::OnBSplineSurface()
+bool CCadSurfDoc::OnBSplineSurfaceEx(CBSplineSurface* bsplineSurface)
 {
-	// TODO: Add your command handler code here
 	Points point;
+	if (bsplineSurface != nullptr)
+	{
+		for (int i = 0; i < 4; i++)
+		{
+			for (int j = 0; j < 4; j++)
+			{
+				CPoint3D &cp = bsplineSurface->GetCpMatrix()[i][j];
+				point.cpMat[i][j][0] = cp.GetX();
+				point.cpMat[i][j][1] = cp.GetY();
+				point.cpMat[i][j][2] = cp.GetZ();
+			}
+		}
+	}
 	if (point.DoModal() == IDOK)
 	{
 		dContext->DeleteAll();
@@ -952,13 +964,33 @@ void CCadSurfDoc::OnBSplineSurface()
 		dContext->Display(gS);
 
 		delete gS;
+		return true;
 	}
+	return false;
 }
 
-void CCadSurfDoc::OnBezierSurface()
+void CCadSurfDoc::OnBSplineSurface()
 {
 	// TODO: Add your command handler code here
+	OnBSplineSurfaceEx();
+}
+
+bool CCadSurfDoc::OnBezierSurfaceEx(CBezierSurface* bezierSurface)
+{
 	Points point;
+	if (bezierSurface != nullptr)
+	{
+		for (int i = 0; i < 4; i++)
+		{
+			for (int j = 0; j < 4; j++)
+			{
+				CPoint3D &cp = bezierSurface->GetCpMatrix()[i][j];
+				point.cpMat[i][j][0] = cp.GetX();
+				point.cpMat[i][j][1] = cp.GetY();
+				point.cpMat[i][j][2] = cp.GetZ();
+			}
+		}
+	}
 	if (point.DoModal() == IDOK)
 	{
 		dContext->DeleteAll();
@@ -980,7 +1012,15 @@ void CCadSurfDoc::OnBezierSurface()
 		dContext->Display(gS);
 
 		delete gS;
+		return true;
 	}
+	return false;
+}
+
+void CCadSurfDoc::OnBezierSurface()
+{
+	// TODO: Add your command handler code here
+	OnBezierSurfaceEx();
 }
 
 void CCadSurfDoc::OnExtsurf() 

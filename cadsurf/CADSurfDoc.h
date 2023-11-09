@@ -108,6 +108,8 @@ public:
 	virtual void AssertValid() const;
 	virtual void Dump(CDumpContext& dc) const;
 #endif
+	bool OnBSplineSurfaceEx(CBSplineSurface* bsplineSurface = nullptr);
+	bool OnBezierSurfaceEx(CBezierSurface* bezierSurface = nullptr);
 
 protected:
 
